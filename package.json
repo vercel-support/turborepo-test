@@ -1,0 +1,53 @@
+{
+    "name": "turborepo-test",
+    "version": "0.0.1",
+    "private": true,
+    "workspaces": [
+        "apps/*",
+        "packages/*"
+    ],
+    "description": "turborepo test",
+    "repository": "https://github.com/orangecoloured/turborepo-test",
+    "scripts": {
+        "dev": "turbo run dev --parallel",
+        "build": "turbo run build",
+        "lint": "turbo run lint",
+        "dev:a": "cd apps/a && yarn dev",
+        "dev:b": "cd apps/b && yarn dev",
+        "build:a": "cd apps/a && yarn build",
+        "build:b": "cd apps/b && yarn build",
+        "start:a": "cd apps/a && yarn start",
+        "start:b": "cd apps/b && yarn start",
+        "dev:all": "yarn dev:a -p 3001 & yarn dev:b -p 3000"
+    },
+    "devDependencies": {
+        "@types/react": "17.0.38",
+        "eslint": "8.6.0",
+        "eslint-config-next": "12.0.7",
+        "file-loader": "^6.2.0",
+        "next-transpile-modules": "^9.0.0",
+        "turbo": "^1.0.24",
+        "typescript": "4.5.4",
+        "typescript-plugin-css-modules": "^3.4.0"
+    },
+    "dependencies": {},
+    "turbo": {
+        "baseBranch": "origin/main",
+        "pipeline": {
+            "build": {
+                "dependsOn": ["^build"],
+                "outputs": [".next/**"]
+            },
+            "test": {
+                "dependsOn": ["^build"],
+                "outputs": []
+            },
+            "lint": {
+                "outputs": []
+            },
+            "dev": {
+                "cache": false
+            }
+        }
+    }
+}
